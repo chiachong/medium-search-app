@@ -1,0 +1,23 @@
+version: "3"
+services:
+  es:
+    image: elasticsearch:7.11.2
+    container_name: es
+    environment:
+       - discovery.type=single-node
+    ports: 
+       - 9200:9200
+    volumes:
+       - esdata:/usr/share/elasticsearch/data
+
+  web:
+    image: medium-search-app
+    container_name: search-app
+    depends_on:
+      - es
+    ports: 
+      - 8501:8501
+
+volumes:
+  esdata:
+    driver: local

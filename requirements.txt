@@ -1,0 +1,5 @@
+beautifulsoup4==4.8.0
+docker-compose==1.29.2
+elasticsearch==7.14.1
+selenium==3.141.0
+streamlit==0.88
