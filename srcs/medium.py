@@ -168,7 +168,7 @@ class Story(object):
 
 
 def get_lists(url: str, chrome: str = None, firefox: str = None) -> List[str]:
-    """ """
+    """ Get urls of all public lists of a medium user. """
     driver = init_driver(chrome, firefox)
     # get username
     username = url.split('/@')[1].split('/')[0]
@@ -201,7 +201,7 @@ def get_lists(url: str, chrome: str = None, firefox: str = None) -> List[str]:
 
 def get_story_from_list(list_url: str, waiting_time: int = 3,
                         chrome: str = None, firefox: str = None) -> List[str]:
-    """ """
+    """ Get urls of all stories in a public medium list. """
     driver = init_driver(chrome, firefox)
     driver.get(list_url)
     # get scroll height
@@ -231,7 +231,7 @@ def get_story_from_list(list_url: str, waiting_time: int = 3,
 
 
 def init_driver(chrome: str, firefox: str):
-    """ """
+    """ Init and return a web driver. """
     if chrome is not None:
         options = webdriver.chrome.options.Options()
         options.add_argument('--headless')
@@ -250,16 +250,3 @@ def init_driver(chrome: str, firefox: str):
         raise ValueError('Please give either chrome or firefox webdriver path.')
 
     return driver
-
-if __name__ == '__main__':
-    scraped_json = 'data/try.json'
-    chrome_driver = 'chromedriver_linux64/chromedriver'
-    url = 'https://medium.com/@chiachong.14/lists'
-    url = 'https://medium.com/@chiachong.14/list/reading-list?source=user_lists---------0-------predefined%3A979f90d1d0cd%3AREADING_LIST---------------------'
-    # story = Story(url)
-    # story.scrape(chrome=chrome_driver)
-    # story.to_json(scraped_json, load_exist=False)
-    # lists = get_lists(url, chrome=chrome_driver)
-    # print(lists)
-    urls = get_story_from_list(url, chrome=chrome_driver)
-    print(urls)
