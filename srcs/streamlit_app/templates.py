@@ -38,7 +38,7 @@ def info_add_story() -> str:
                 <li>
                     JSON - content of one or more medium stories. 
                     Example file can be found at 
-                    <a href="https://github.com/chiachong/scrape_medium/blob/main/data/my_lists.json">here</a>.
+                    <a href="https://github.com/chiachong/medium-search-app/blob/main/data/example.json">here</a>.
                 </li>
             </ul>
         </div>
