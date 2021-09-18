@@ -133,7 +133,7 @@ def pagination(total_pages: int, search: str, current_page: int,
                tags: str) -> str:
     """ Create and return html for pagination. """
     # search words and tags
-    search_params = f'?search={search}'
+    search_params = f'?search={urllib.parse.quote(search)}'
     if tags is not None:
         search_params += f'&tags={tags}'
 
