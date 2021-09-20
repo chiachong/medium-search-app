@@ -18,6 +18,29 @@ es = Elasticsearch(host=DOMAIN)
 utils.check_and_create_index(es, INDEX)
 
 
+def set_session_state():
+    """ """
+    # default values
+    if 'search' not in st.session_state:
+        st.session_state.search = None
+    if 'tags' not in st.session_state:
+        st.session_state.tags = None
+    if 'page' not in st.session_state:
+        st.session_state.page = 1
+
+    # get parameters in url
+    para = st.experimental_get_query_params()
+    if 'search' in para:
+        st.experimental_set_query_params()
+        st.session_state.search = urllib.parse.unquote(para['search'][0])
+    if 'tags' in para:
+        st.experimental_set_query_params()
+        st.session_state.tags = para['tags'][0]
+    if 'page' in para:
+        st.experimental_set_query_params()
+        st.session_state.page = int(para['page'][0])
+
+
 def main():
     st.set_page_config(page_title='Medium Search Engine')
     set_session_state()
@@ -133,29 +156,6 @@ def main():
         #     tags = st.text_input('Tags', ', '.join(story['tags']))
         #     content = st.text_area('Content', ' '.join(story['content']))
         #     st.form_submit_button('Add', 'Check')
-
-
-def set_session_state():
-    """ """
-    # default values
-    if 'search' not in st.session_state:
-        st.session_state.search = None
-    if 'page' not in st.session_state:
-        st.session_state.page = 1
-    if 'tags' not in st.session_state:
-        st.session_state.tags = None
-
-    # get parameters in url
-    para = st.experimental_get_query_params()
-    if 'page' in para.keys():
-        st.experimental_set_query_params()
-        st.session_state.page = int(para['page'][0])
-    if 'search' in para.keys():
-        st.experimental_set_query_params()
-        st.session_state.search = urllib.parse.unquote(para['search'][0])
-    if 'tags' in para.keys():
-        st.experimental_set_query_params()
-        st.session_state.tags = para['tags'][0]
 
 
 if __name__ == '__main__':

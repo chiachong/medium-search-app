@@ -38,31 +38,6 @@ def safe_check_index(es, index: str, retry: int = 3):
         safe_check_index(es, index, retry - 1)
 
 
-@st.cache(show_spinner=False)
-def get_story_urls_from_list(url: str, chrome: str):
-    """ """
-    with st.spinner('Getting story urls from list...'):
-        return medium.get_story_from_list(url, chrome=chrome)
-
-
-@st.cache(show_spinner=False)
-def get_story_from_url(url: str, chrome: str) -> dict:
-    """ """
-    retry = 0
-    while retry < 5:
-        try:
-            story = medium.Story(url)
-            story.scrape(chrome=chrome)
-            return story.to_dict()
-        except Exception as e:
-            print(e)
-            time.sleep(1)
-            retry += 1
-
-    print(f'Error getting {url}')
-    return {}
-
-
 def index_search(es, index: str, keywords: str, filters: str, from_i: int,
                  size: int) -> dict:
     """ """
@@ -148,3 +123,28 @@ def simplify_es_result(result: dict) -> dict:
     # limit the number of characters in the title
     res['title'] = shorten_title(res['title'])
     return res
+
+
+@st.cache(show_spinner=False)
+def get_story_urls_from_list(url: str, chrome: str):
+    """ """
+    with st.spinner('Getting story urls from list...'):
+        return medium.get_story_from_list(url, chrome=chrome)
+
+
+@st.cache(show_spinner=False)
+def get_story_from_url(url: str, chrome: str) -> dict:
+    """ """
+    retry = 0
+    while retry < 5:
+        try:
+            story = medium.Story(url)
+            story.scrape(chrome=chrome)
+            return story.to_dict()
+        except Exception as e:
+            print(e)
+            time.sleep(1)
+            retry += 1
+
+    print(f'Error getting {url}')
+    return {}

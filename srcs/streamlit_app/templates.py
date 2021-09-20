@@ -133,9 +133,9 @@ def pagination(total_pages: int, search: str, current_page: int,
                tags: str) -> str:
     """ Create and return html for pagination. """
     # search words and tags
-    search_params = f'?search={urllib.parse.quote(search)}'
+    params = f'?search={urllib.parse.quote(search)}'
     if tags is not None:
-        search_params += f'&tags={tags}'
+        params += f'&tags={tags}'
 
     # avoid invalid page number (<=0)
     if (current_page - 5) > 0:
@@ -143,21 +143,21 @@ def pagination(total_pages: int, search: str, current_page: int,
     else:
         start_from = 1
 
-    page_hrefs = []
+    hrefs = []
     if current_page != 1:
-        page_hrefs.append(f'<a href="{search_params}&page={1}">&lt&ltFirst</a>')
-        page_hrefs.append(f'<a href="{search_params}&page={current_page - 1}">&ltPrevious</a>')
+        hrefs.append(f'<a href="{params}&page={1}">&lt&ltFirst</a>')
+        hrefs.append(f'<a href="{params}&page={current_page - 1}">&ltPrevious</a>')
 
     for i in range(start_from, min(total_pages + 1, start_from + 10)):
         if i == current_page:
-            page_hrefs.append(f'{current_page}')
+            hrefs.append(f'{current_page}')
         else:
-            page_hrefs.append(f'<a href="{search_params}&page={i}">{i}</a>')
+            hrefs.append(f'<a href="{params}&page={i}">{i}</a>')
 
     if current_page != total_pages:
-        page_hrefs.append(f'<a href="{search_params}&page={current_page + 1}">Next&gt</a>')
+        hrefs.append(f'<a href="{params}&page={current_page + 1}">Next&gt</a>')
 
-    return '<div>' + '&emsp;'.join(page_hrefs) + '</div>'
+    return '<div>' + '&emsp;'.join(hrefs) + '</div>'
 
 
 def search_result(i: int, url: str, title: str, highlights: str,
